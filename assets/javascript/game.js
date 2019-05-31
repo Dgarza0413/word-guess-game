@@ -61,15 +61,21 @@ function gameReset() {
     var livesMeter = 5;
     console.log("reset game???")
     console.log("press space to continue???")
-    lives.textContent = livesMeter;
-    var randomword = wordList[Math.floor(Math.random() * wordList.length)];
-
-    console.log(randWord)
-    randomWord
+    if (event.key === " ") {
+        lives.textContent = livesMeter;
+        randWord = wordList[Math.floor(Math.random() * wordList.length)];
+        answerWord = randWord.split("");
+        blank = " ";
+        display = blank.repeat(randWord.length);
+        split = display.split("")
+        console.log(randWord)
+        return answerWord
+    }
 
 }
 
 //KeyStrokes
+// gameReset();
 document.onkeypress = function (event) {
     for (var i = 0; i < answerWord.length; i++) {
         if (event.key === answerWord[i]) {
