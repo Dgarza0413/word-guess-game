@@ -1,23 +1,11 @@
 //Const array wordlist for calling
+var wordList = ["wordone", "wordtwo", "wordthree", "wordfour"];
+var randWord = wordList[Math.floor(Math.random() * wordList.length)];
+//use split to create array from randWord
+var answerArray = [];
+var answerWord = randWord.split("");
+// var answerWord = randomWord();
 
-
-// var wordList = ["wordone", "wordtwo", "wordthree", "wordfour"];
-// var randWord = wordList[Math.floor(Math.random() * wordList.length)];
-// //use split to create array from randWord
-// var answerWord = randWord.split("");
-
-
-function randomWord() {
-    var wordList = ["wordone", "wordtwo", "wordthree", "wordfour"];
-    var randWord = wordList[Math.floor(Math.random() * wordList.length)];
-    var answerWord = randWord.split("");
-}
-
-function splitWord() {
-    var blank = " ";
-    var display = blank.repeat(randWord.length);
-    var split = display.split("")
-}
 
 //DOM Variables
 var lives = document.getElementById("lives");
@@ -27,7 +15,6 @@ var result = document.getElementById("result");
 var testBox = document.getElementById("testBox");
 var winScore = document.getElementById("winScore")
 
-
 //Variables
 //Create blank space to help match array length of answerWord
 var blank = " ";
@@ -36,6 +23,7 @@ var display = blank.repeat(randWord.length);
 //split blank into array
 //THIS VARIABLE CAUSES THE WIN!!
 var split = display.split("")
+//decrease counter
 var livesMeter = 5;
 //Push keys into array
 var keyPressed = [];
@@ -48,8 +36,9 @@ var winCount = 0;
 var lostCount = 0;
 
 //Static displays
-// word.textContent = randWord;
+word.textContent = randWord;
 box.textContent = display;
+// box.textContent = newWord();
 
 //function for gamewin
 function gameWin() {
@@ -72,20 +61,20 @@ function gameReset() {
     var livesMeter = 5;
     console.log("reset game???")
     console.log("press space to continue???")
-    if (event.key === " ") {
-        lives.textContent = livesMeter;
-        keyPressed = [];
-        randomWord()
+    lives.textContent = livesMeter;
+    var randomword = wordList[Math.floor(Math.random() * wordList.length)];
 
-    }
+    console.log(randWord)
+    randomWord
+
 }
 
 //KeyStrokes
-document.onkeypress = function key(event) {
+document.onkeypress = function (event) {
     for (var i = 0; i < answerWord.length; i++) {
         if (event.key === answerWord[i]) {
             split[i] = event.key
-            box.textContent = split.join("_")
+            box.textContent = split.join("")
         }
     }
     if (gameWin()) { return gameReset() }
@@ -97,3 +86,32 @@ document.onkeypress = function key(event) {
     letterList.textContent = keyPressed;
     guessBox.textContent = event.key;
 };
+
+
+function randomWord() {
+    var wordList = ["wordone", "wordtwo", "wordthree", "wordfour"];
+    var randWord = wordList[Math.floor(Math.random() * wordList.length)];
+    var blank = " ";
+    var display = blank.repeat(randWord.length);
+    var split = display.split("")
+    word.textContent = randWord;
+    return split
+}
+
+function initialstart() {
+    if (document.onkeypress === ' ') {
+        console.log("game begin")
+    }
+}
+
+// split the for loop into function
+function wordLoop() {
+    randomWord();
+    splitWord();
+    for (var i = 0; i < answerWord.length; i++) {
+        if (event.key === answerWord[i]) {
+            split[i] = event.key
+            box.textContent = split.join("_")
+        }
+    }
+}
