@@ -30,7 +30,7 @@ var display = blank.repeat(randWord.length);
 //THIS VARIABLE CAUSES THE WIN!!
 var split = display.split("")
 //decrease counter
-var livesMeter = 5;
+var livesMeter = 9;
 //Push keys into array
 var keyPressed = [];
 //limit keyrange
@@ -72,7 +72,7 @@ function gameReset() {
     if (event.key === " " && event.key.match(regexSpace)) {
         //if i press the space bar all variables and displays are turned back to blank
         keyPressed = [];
-        livesMeter = 5
+        livesMeter = 9
         randWord = wordList[Math.floor(Math.random() * wordList.length)];
         answerWord = randWord.split("");
         blank = " ";
@@ -88,8 +88,9 @@ function gameReset() {
         // word.textContent = randWord;
         box.textContent = split.join("_");
         gunCock.play();
-        console.log(randWord)
-        return answerWord
+        // console.log(randWord)
+        answerWord
+        // return answerWord
     }
 }
 
@@ -102,11 +103,13 @@ document.onkeypress = function (event) {
             box.textContent = split.join("_")
         }
     }
+    //checks between the answerWord and keyPressed array that contains the keys for lives lost
     if (answerWord.indexOf(event.key) === -1 && keyPressed.indexOf(event.key) === -1 && event.key.match(regex)) {
         lives.textContent = --livesMeter
         keyPressed.push(event.key)
     }
-    if (gameWin() || gameLoss())
-        letterList.textContent = keyPressed;
+    //check if win or lose
+    if (gameWin() || gameLoss()) { }
+    letterList.textContent = keyPressed;
     guessBox.textContent = event.key;
 };
