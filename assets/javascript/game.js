@@ -1,5 +1,6 @@
 //Const array wordlist for calling
-var wordList = ["wordone", "wordtwo", "wordthree", "wordfour"];
+var wordList = ["former human", "former human sergeant", "former commando", "imp", "demon", "spectre", "lost soul", "cacodemon", "pain elemental", "mancubus", "baron of hell", "hell knight", "revenant", "arch vile", "cyberdemon", "fists", "chainsaw", "shotgun", "chaingun", "rocket launcher", "plasma gun", "bfg"];
+// ["former human", "former human sergeant", "former commando", "imp", "demon", "spectre", "lost soul"]
 var randWord = wordList[Math.floor(Math.random() * wordList.length)];
 //use split to create array from randWord
 var answerArray = [];
@@ -37,41 +38,53 @@ var lostCount = 0;
 
 //Static displays
 word.textContent = randWord;
-box.textContent = display;
-// box.textContent = newWord();
+box.textContent = split.join("_");
 
 //function for gamewin
 function gameWin() {
     //If split and answerWord equal each other it causes a win
     if (split.join('') === answerWord.join('')) {
-        result.textContent = "THE WORD IS COMPLETE!!"
+        result.textContent = "RIP AND TEAR!!"
         gameReset();
         winScore.textContent = ++winCount;
+
     }
 }
 
 function gameLoss() {
-    if (livesMeter === 0) {
-        result.textContent = "YOU LOSE!!";
+    if (livesMeter <= 0) {
+        result.textContent = "YOU DOOM IS AT HAND!!";
         gameReset();
+        loseScore.textContent = ++lostCount;
     }
 }
 
 function gameReset() {
-    var livesMeter = 5;
+    resultReset.textContent = "more demons are out there!!! Press space to FIGHT!!!"
+    letterList.textContent = keyPressed
     console.log("reset game???")
     console.log("press space to continue???")
-    if (event.key === " ") {
-        lives.textContent = livesMeter;
+    if (event.key === " " && event.key.match(regexSpace)) {
+        //if i press the space bar all variables and displays are turned back to blank
+        keyPressed = [];
+        livesMeter = 5
         randWord = wordList[Math.floor(Math.random() * wordList.length)];
         answerWord = randWord.split("");
         blank = " ";
         display = blank.repeat(randWord.length);
         split = display.split("")
+
+        //clear the dom elements
+        result.textContent = "";
+        resultReset.textContent = "";
+
+        //set dom elements with new items
+        lives.textContent = livesMeter;
+        word.textContent = randWord;
+        box.textContent = split.join("_");
         console.log(randWord)
         return answerWord
     }
-
 }
 
 //KeyStrokes
@@ -80,14 +93,16 @@ document.onkeypress = function (event) {
     for (var i = 0; i < answerWord.length; i++) {
         if (event.key === answerWord[i]) {
             split[i] = event.key
-            box.textContent = split.join("")
+            box.textContent = split.join("_")
         }
     }
-    if (gameWin()) { return gameReset() }
-    if (gameLoss()) { return gameReset() }
+
     if (answerWord.indexOf(event.key) === -1 && keyPressed.indexOf(event.key) === -1 && event.key.match(regex)) {
         lives.textContent = --livesMeter
         keyPressed.push(event.key)
+    }
+    if (gameWin() || gameLoss()) {
+        return gameReset()
     }
     letterList.textContent = keyPressed;
     guessBox.textContent = event.key;
@@ -102,22 +117,4 @@ function randomWord() {
     var split = display.split("")
     word.textContent = randWord;
     return split
-}
-
-function initialstart() {
-    if (document.onkeypress === ' ') {
-        console.log("game begin")
-    }
-}
-
-// split the for loop into function
-function wordLoop() {
-    randomWord();
-    splitWord();
-    for (var i = 0; i < answerWord.length; i++) {
-        if (event.key === answerWord[i]) {
-            split[i] = event.key
-            box.textContent = split.join("_")
-        }
-    }
 }
