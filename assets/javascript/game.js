@@ -5,6 +5,11 @@ var randWord = wordList[Math.floor(Math.random() * wordList.length)];
 //use split to create array from randWord
 var answerArray = [];
 var answerWord = randWord.split("");
+//wavfiles called
+var gunCock = new Audio('assets/images/DSSGCOCK.WAV')
+var pain = new Audio('assets/images/DSPOPAIN.WAV')
+var gunShot = new Audio('assets/images/DSPISTOL.WAV')
+
 // var answerWord = randomWord();
 
 
@@ -37,7 +42,7 @@ var winCount = 0;
 var lostCount = 0;
 
 //Static displays
-word.textContent = randWord;
+// word.textContent = randWord;
 box.textContent = split.join("_");
 
 //function for gamewin
@@ -47,12 +52,12 @@ function gameWin() {
         result.textContent = "RIP AND TEAR!!"
         gameReset();
         winScore.textContent = ++winCount;
-
     }
 }
 
 function gameLoss() {
     if (livesMeter <= 0) {
+        pain.play()
         result.textContent = "YOU DOOM IS AT HAND!!";
         gameReset();
         loseScore.textContent = ++lostCount;
@@ -80,41 +85,28 @@ function gameReset() {
 
         //set dom elements with new items
         lives.textContent = livesMeter;
-        word.textContent = randWord;
+        // word.textContent = randWord;
         box.textContent = split.join("_");
+        gunCock.play();
         console.log(randWord)
         return answerWord
     }
 }
 
 //KeyStrokes
-// gameReset();
 document.onkeypress = function (event) {
     for (var i = 0; i < answerWord.length; i++) {
         if (event.key === answerWord[i]) {
             split[i] = event.key
+            gunShot.play();
             box.textContent = split.join("_")
         }
     }
-
     if (answerWord.indexOf(event.key) === -1 && keyPressed.indexOf(event.key) === -1 && event.key.match(regex)) {
         lives.textContent = --livesMeter
         keyPressed.push(event.key)
     }
-    if (gameWin() || gameLoss()) {
-        return gameReset()
-    }
-    letterList.textContent = keyPressed;
+    if (gameWin() || gameLoss())
+        letterList.textContent = keyPressed;
     guessBox.textContent = event.key;
 };
-
-
-function randomWord() {
-    var wordList = ["wordone", "wordtwo", "wordthree", "wordfour"];
-    var randWord = wordList[Math.floor(Math.random() * wordList.length)];
-    var blank = " ";
-    var display = blank.repeat(randWord.length);
-    var split = display.split("")
-    word.textContent = randWord;
-    return split
-}
