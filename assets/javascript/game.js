@@ -44,6 +44,10 @@ var lostCount = 0;
 //Static displays
 // word.textContent = randWord;
 box.textContent = split.join("_");
+function gameStart() {
+
+}
+
 
 //function for gamewin
 function gameWin() {
