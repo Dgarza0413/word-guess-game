@@ -1,16 +1,33 @@
 //Const array wordlist for calling
 var wordList = ["former human", "former human sergeant", "former commando", "imp", "demon", "spectre", "lost soul", "cacodemon", "pain elemental", "mancubus", "baron of hell", "hell knight", "revenant", "arch vile", "cyberdemon", "fists", "chainsaw", "shotgun", "chaingun", "rocket launcher", "plasma gun", "bfg"];
-// ["former human", "former human sergeant", "former commando", "imp", "demon", "spectre", "lost soul"]
-var randWord = wordList[Math.floor(Math.random() * wordList.length)];
-//use split to create array from randWord
-var answerArray = [];
-var answerWord = randWord.split("");
-//wavfiles called
-var gunCock = new Audio('assets/images/DSSGCOCK.WAV')
-var pain = new Audio('assets/images/DSPOPAIN.WAV')
-var gunShot = new Audio('assets/images/DSPISTOL.WAV')
 
-// var answerWord = randomWord();
+var wordListObj = [{
+    "name": "former human",
+    "image": "jpeg"
+},
+{
+    "name": "former human",
+    "image": "jpeg"
+}]
+
+var randomWord = wordList[Math.floor(Math.random() * wordList.length)];
+var randomWordDisplay = blank.repeat(randomWord.length);
+
+var answerWord = randomWord.split("");
+
+
+var answerArray = [];
+
+// var gunCock = new Audio('assets/images/DSSGCOCK.WAV')
+// var pain = new Audio('assets/images/DSPOPAIN.WAV')
+// var gunShot = new Audio('assets/images/DSPISTOL.WAV')
+
+var blank = " ";
+var split = randomWordDisplay.split("")
+
+console.log(answerWord)
+console.log(split)
+
 
 
 //DOM Variables
@@ -22,13 +39,6 @@ var testBox = document.getElementById("testBox");
 var winScore = document.getElementById("winScore")
 
 //Variables
-//Create blank space to help match array length of answerWord
-var blank = " ";
-//Use repeat blank with randWord length to create two equal length array
-var display = blank.repeat(randWord.length);
-//split blank into array
-//THIS VARIABLE CAUSES THE WIN!!
-var split = display.split("")
 //decrease counter
 var livesMeter = 9;
 //Push keys into array
@@ -43,7 +53,7 @@ var lostCount = 0;
 
 //Static displays
 // word.textContent = randWord;
-box.textContent = split.join("_");
+box.textContent = split.join("");
 function gameStart() {
 
 }
@@ -77,11 +87,11 @@ function gameReset() {
         //if i press the space bar all variables and displays are turned back to blank
         keyPressed = [];
         livesMeter = 9
-        randWord = wordList[Math.floor(Math.random() * wordList.length)];
-        answerWord = randWord.split("");
+        randomWord = wordList[Math.floor(Math.random() * wordList.length)];
+        answerWord = randomWord.split("");
         blank = " ";
-        display = blank.repeat(randWord.length);
-        split = display.split("")
+        randomWordDisplay = blank.repeat(randomWord.length);
+        split = randomWordDisplay.split("")
 
         //clear the dom elements
         result.textContent = "";
