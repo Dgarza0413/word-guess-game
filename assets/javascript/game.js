@@ -10,15 +10,16 @@ var wordListObj = [{
     "image": "jpeg"
 }]
 
-var blank = " ";
+var blank = "_";
 var answerArray = [];
 
 var randomWord = wordList[Math.floor(Math.random() * wordList.length)];
-var randomWordDisplay = blank.repeat(randomWord.length);
-var randomWordSplit = randomWordDisplay.split("")
+var randomWordRepeat = blank.repeat(randomWord.length);
+var randomWordSplit = randomWordRepeat.split("")
 var answerWord = randomWord.split("");
 
 console.log(randomWordSplit)
+console.log(answerWord)
 
 // var gunCock = new Audio('assets/images/DSSGCOCK.WAV')
 // var pain = new Audio('assets/images/DSPOPAIN.WAV')
@@ -31,6 +32,7 @@ var word = document.getElementById("word");
 var result = document.getElementById("result");
 var testBox = document.getElementById("testBox");
 var winScore = document.getElementById("winScore")
+var startButton = document.getElementById("start-button")
 
 //Variables
 var gameState = false;
@@ -48,7 +50,29 @@ var lostCount = 0;
 function gameStart() {
     gameState === true
     if (!gameState) {
-        console.log("this game has started")
+        startButton.remove(1)
+        box.textContent = randomWordRepeat;
+        keyStrokes()
+    }
+}
+
+function keyStrokes() {
+    document.onkeypress = function (event) {
+        for (var i = 0; i < answerWord.length; i++) {
+            if (event.key === answerWord[i]) {
+                randomWordSplit[i] = event.key
+                box.textContent = randomWordSplit.join("")
+            }
+        }
+        //checks between the answerWord and keyPressed array that contains the keys for lives lost
+        if (answerWord.indexOf(event.key) === -1 && keyPressed.indexOf(event.key) === -1 && event.key.match(regex)) {
+            lives.textContent = --livesMeter
+            keyPressed.push(event.key)
+        }
+        //check if win or lose
+        if (gameWin() || gameLoss()) { }
+        letterList.textContent = keyPressed;
+        guessBox.textContent = event.key;
     }
 }
 
