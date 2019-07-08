@@ -52,11 +52,11 @@ function gameStart() {
     if (!gameState) {
         startButton.remove(1)
         box.textContent = randomWordRepeat;
-        keyStrokes()
+        keyStrokes(gameState)
     }
 }
 
-function keyStrokes() {
+function keyStrokes(gameState) {
     document.onkeypress = function (event) {
         for (var i = 0; i < answerWord.length; i++) {
             if (event.key === answerWord[i]) {
@@ -66,11 +66,23 @@ function keyStrokes() {
         }
         //checks between the answerWord and keyPressed array that contains the keys for lives lost
         if (answerWord.indexOf(event.key) === -1 && keyPressed.indexOf(event.key) === -1 && event.key.match(regex)) {
-            lives.textContent = --livesMeter
+            if (livesMeter >= 0) {
+                lives.textContent = --livesMeter
+                gameState === false
+                console.log("gameover")
+            }
             keyPressed.push(event.key)
+
+            if (randomWordSplit.join('') === answerWord.join('') && livesMeter >= 0) {
+                gameState === false
+                console.log("game won")
+            }
         }
+
         //check if win or lose
-        if (gameWin() || gameLoss()) { }
+        // if (gameWin() || gameLoss()) {
+        //     // gameState === false
+        // }
         letterList.textContent = keyPressed;
         guessBox.textContent = event.key;
     }
